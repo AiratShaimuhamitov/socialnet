@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SocialNet</title>
+
+	<style type="text/css">
+		html,body{
+			height:90%;
+			margin:0px;
+			padding:0px
+		}
+		td.a {
+			text-align:center;
+			vertical-align:middle;
+		}
+	</style>
+
+</head>
+<body>
+	<span style="font-family: Arial,serif; ">
+			<h1 align="center">Social Net</h1>
+			<table width="100%" height="80%">
+				<tr>
+					<td class=a>
+						<form action="/session" method="post">
+							<p>Email: <input type="text" name="email"></p>
+							<p>Password: <input type="password" name="password"></p>
+							<p><input type="submit" value="SignUp"></p>
+							<p> <span style="color: #c60909; ">${status}</span></p>
+						</form>
+						<a href="/reg">Create account</a>
+					</td>
+				</tr>
+			</table>
+	</span>
+</body>
+</html>
