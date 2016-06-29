@@ -5,9 +5,12 @@ import Servlets.SessionDeleteServlet;
 import Servlets.SessionServlet;
 import Servlets.RegistrationServlet;
 import dbService.DBService;
+import dbService.dataSets.FriendsDataSet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+
+import java.util.List;
 
 class Main{
     public static void main(String []args) throws Exception{

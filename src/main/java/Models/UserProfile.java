@@ -1,6 +1,8 @@
 package Models;
 
 
+import java.util.ArrayList;
+
 public class UserProfile {
 
     //user information
@@ -10,6 +12,7 @@ public class UserProfile {
     private int age;
     private String email;
     private String pass;
+    private ArrayList<Long> friends;
 
     public UserProfile(long id, String name, String lastName, int age, String email, String pass){
         this.id = id;
@@ -18,6 +21,17 @@ public class UserProfile {
         this.age = age;
         this.email = email;
         this.pass = pass;
+        friends = null;
+    }
+
+    public UserProfile(long id, String name, String lastName, int age, String email, String pass, ArrayList<Long> friends){
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.pass = pass;
+        this.friends = friends;
     }
 
 
@@ -43,6 +57,10 @@ public class UserProfile {
 
     public String getPass() {
         return pass;
+    }
+
+    public ArrayList<Long> getFriends(){
+        return friends;
     }
 
     @Override
