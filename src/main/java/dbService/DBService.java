@@ -33,9 +33,10 @@ public class DBService {
             UsersDAO dao = new UsersDAO(session);
             UsersDataSet dataSet = dao.get(id);
             session.close();
+            List<Long> friendsId =getFriendsId(dataSet.getId());
             return new UserProfile(dataSet.getId(), dataSet.getName(),
                     dataSet.getLastName(), dataSet.getAge(), dataSet.getEmail(),
-                    dataSet.getPass());
+                    dataSet.getPass(), friendsId);
         } catch (HibernateException e) {
             throw new DBException(e);
         }
@@ -50,9 +51,10 @@ public class DBService {
             if(dataSet == null) {
                 return null;
             }
+            List<Long> friendsId =getFriendsId(dataSet.getId());
             return new UserProfile(dataSet.getId(), dataSet.getName(),
                     dataSet.getLastName(), dataSet.getAge(), dataSet.getEmail(),
-                    dataSet.getPass());
+                    dataSet.getPass(), friendsId);
         } catch (HibernateException e) {
             throw new DBException(e);
         }
@@ -73,7 +75,7 @@ public class DBService {
         }
     }
 
-    public long addFriend(long userId, long friendId) throws  DBException{
+    public long addFriendId(long userId, long friendId) throws  DBException{
         try{
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
@@ -88,7 +90,21 @@ public class DBService {
         }
     }
 
-    public List<Long> getFriendsId(long userId) throws DBException{
+    public void clearFriendId(long userId, long friendId) throws DBException{
+        try{
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            UsersDAO dao = new UsersDAO(session);
+            dao.clearFriendId(userId, friendId);
+            transaction.commit();
+            session.close();
+        }
+        catch (HibernateException e){
+            throw new DBException(e);
+        }
+    }
+
+    private List<Long> getFriendsId(long userId) throws DBException{
         Session session = sessionFactory.openSession();
         UsersDAO dao = new UsersDAO(session);
         List<FriendsDataSet> friendsDataSets = dao.getFriends(userId);

@@ -28,8 +28,6 @@ public class SessionServlet extends HttpServlet {
 
         Map<String, Object> pageVariables = new HashMap<>();
 
-
-
         if(userService.checkSessionId(sessionId)){
             UserProfile userProfile = userService.getUserBySessionId(sessionId);
             pageVariables = getPageVariables(userProfile);
@@ -48,7 +46,9 @@ public class SessionServlet extends HttpServlet {
 
         UserProfile userProfile = userService.getUserByEmail(email);
 
+
         if(userProfile != null && userProfile.getPass().equals(pass)){
+
             String sessionId = req.getSession().getId();
             userService.addUserSession(sessionId, userProfile);
             Map<String, Object> pageVariables = getPageVariables(userProfile);
@@ -67,6 +67,7 @@ public class SessionServlet extends HttpServlet {
         pageVariables.put("lastName", userProfile.getLastName());
         pageVariables.put("age", userProfile.getAge());
         pageVariables.put("email", userProfile.getEmail());
+        pageVariables.put("friends_value", userProfile.getFriends().size());
         return pageVariables;
     }
 }

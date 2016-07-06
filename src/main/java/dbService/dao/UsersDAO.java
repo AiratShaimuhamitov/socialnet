@@ -42,6 +42,22 @@ public class UsersDAO {
         return (Long) session.save(new FriendsDataSet(-1 ,user_id, friend_id));
     }
 
+    //TODO kostyl, repair with criteria
+    public void clearFriendId(long userId, long friendId) throws HibernateException{
+        FriendsDataSet friendsDataSet = getFriendsDataSet(userId, friendId);
+        session.delete(friendsDataSet);
+    }
+
+    private FriendsDataSet getFriendsDataSet(long userId, long friendId) {
+        List<FriendsDataSet> dataSet = getFriends(userId);
+        for(FriendsDataSet friendsDataSet: dataSet){
+            if(friendsDataSet.getFriendId() == friendId){
+                return friendsDataSet;
+            }
+        }
+        return null;
+    }
+
     //TODO kostyl
     public List<FriendsDataSet> getFriends(long id) throws HibernateException{
         Criteria criteria = session.createCriteria(FriendsDataSet.class);

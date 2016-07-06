@@ -3,6 +3,7 @@ package Services;
 import Models.UserProfile;
 import dbService.DBException;
 import dbService.DBService;
+import dbService.dataSets.FriendsDataSet;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -42,6 +43,15 @@ public class UserService {
 
     public UserProfile getUserBySessionId(String sessionId){
         return sessionIdToProfile.get(sessionId);
+    }
+
+    public UserProfile getUserById(Long id){
+        try {
+            return dbService.getUser(id);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public UserProfile getUser(HttpServletRequest request){
@@ -105,5 +115,21 @@ public class UserService {
             e.printStackTrace();
         }
         return true;
+    }
+
+    public void addFriend(UserProfile userProfile, long userId){
+        try {
+            dbService.addFriendId(userProfile.getId(), userId);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteFriend(UserProfile userProfile, long userId){
+        try {
+            dbService.clearFriendId(userProfile.getId(), userId);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
     }
 }
