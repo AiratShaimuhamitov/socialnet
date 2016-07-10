@@ -36,7 +36,7 @@ public class FriendsServlet extends HttpServlet {
             int i = 1;
             for (Long friendsId: friends){
                 UserProfile friendProfile = userService.getUserById(friendsId);
-                stringBuilder.append(i + ". " + friendProfile.getName() + " " + friendProfile.getLastName() + " <br>");
+                stringBuilder.append("<a href=\"user?id="+ friendProfile.getId() +"\">" + i + ". " + friendProfile.getName() + " " + friendProfile.getLastName() + "</a> <br>");
                 i++;
             }
             HashMap<String, Object> pageVariables = new HashMap<>();

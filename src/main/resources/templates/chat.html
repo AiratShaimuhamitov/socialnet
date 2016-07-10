@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>General Chat</title>
+    <script type="text/javascript">
+        var ws;
+        function init() {
+            ws = new WebSocket("ws://localhost:8080/chat");
+            ws.onopen = function (event) {
+
+            }
+            ws.onmessage = function (event) {
+                var $textarea = document.getElementById("messages");
+                $textarea.value = $textarea.value + event.data + "\n";
+            }
+            ws.onclose = function (event) {
+
+            }
+        }
+        function sendMessage(name) {
+            var messageField = document.getElementById("message");
+            var userNameField = String(name);
+            var message = userNameField + ":" + messageField.value;
+            ws.send(message);
+            messageField.value = '';
+        }
+    </script>
+</head>
+<body onload="init();">
+<div id="body">
+    <span style="font-family: Arial,serif;">
+		<h1 align="center">SocialNet</h1>
+		<table width="100%" border="5" >
+			<tr>
+				<td width="50%" align="left">
+					<p><a href="/*">My page</a></p>
+					<p><a href="/friends">My friends(Beta)</a></p>
+					<p><a href="messages">My messages(Beta)</a></p>
+					<p><a href="/wschat">General chat</a></p>
+					<p><a href="/exit">Exit</a></p>
+				</td>
+				<td width="50%" align="left" class="a">
+					<div id="menu">
+                        <p class="welcome">
+                            Welcome, ${name}
+                        </p>
+
+                        <div style="clear: both"></div>
+                    </div>
+
+                    <div id="chatbox">
+                        <textarea id="messages" rows="20" cols="50" readonly="readonly"></textarea>
+                    </div>
+
+                    <form name="message" action="">
+                        <input name="usermsg" type="text" id="message" size="40"/>
+                        <input type="button" name="submitmsg" value="Send..." onclick="sendMessage('${name}');"/>
+                    </form>
+				</td>
+			</tr>
+		</table>
+	</span>
+
+</div>
+</body>
+</html>

@@ -30,7 +30,7 @@ public class SessionServlet extends HttpServlet {
 
         if(userService.checkSessionId(sessionId)){
             UserProfile userProfile = userService.getUserBySessionId(sessionId);
-            pageVariables = getPageVariables(userProfile);
+            pageVariables = userService.getUserVariables(userProfile);
             resp.getWriter().print(PageGenerator.instance().getPage("main.html", pageVariables));
         } else {
             pageVariables.put("status", "");
@@ -51,7 +51,7 @@ public class SessionServlet extends HttpServlet {
 
             String sessionId = req.getSession().getId();
             userService.addUserSession(sessionId, userProfile);
-            Map<String, Object> pageVariables = getPageVariables(userProfile);
+            Map<String, Object> pageVariables = userService.getUserVariables(userProfile);
             resp.getWriter().print(PageGenerator.instance().getPage("main.html", pageVariables));
         } else {
             Map<String, Object> pageVariables = new HashMap<>();
@@ -59,15 +59,5 @@ public class SessionServlet extends HttpServlet {
             resp.getWriter().print(PageGenerator.instance().getPage("index.html", pageVariables));
         }
         resp.setStatus(HttpServletResponse.SC_OK);
-    }
-
-    private Map<String, Object> getPageVariables(UserProfile userProfile){
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("name", userProfile.getName());
-        pageVariables.put("lastName", userProfile.getLastName());
-        pageVariables.put("age", userProfile.getAge());
-        pageVariables.put("email", userProfile.getEmail());
-        pageVariables.put("friends_value", userProfile.getFriends().size());
-        return pageVariables;
     }
 }

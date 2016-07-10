@@ -132,4 +132,14 @@ public class UserService {
             e.printStackTrace();
         }
     }
+
+    public Map<String, Object> getUserVariables(UserProfile userProfile){
+        Map<String, Object> pageVariables = new HashMap<>();
+        pageVariables.put("name", userProfile.getName());
+        pageVariables.put("lastName", userProfile.getLastName());
+        pageVariables.put("age", userProfile.getAge());
+        pageVariables.put("email", userProfile.getEmail());
+        pageVariables.put("friends_value", userProfile.getFriends().size());
+        return pageVariables;
+    }
 }
