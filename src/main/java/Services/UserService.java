@@ -7,6 +7,7 @@ import dbService.dataSets.FriendsDataSet;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -132,6 +133,16 @@ public class UserService {
             e.printStackTrace();
         }
     }
+
+    public List<UserProfile> getUserProfilesByName(String name, String lastName){
+        try {
+            return dbService.getUsersByName(name, lastName);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public Map<String, Object> getUserVariables(UserProfile userProfile){
         Map<String, Object> pageVariables = new HashMap<>();

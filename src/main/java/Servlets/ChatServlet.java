@@ -26,13 +26,13 @@ public class ChatServlet extends HttpServlet{
 
         UserProfile userProfile = userService.getUserBySessionId(sessionId);
 
+        Map<String, Object> pageVariables = new HashMap<>();
         if(userProfile == null){
-            resp.getWriter().print("SignUp before!");
-
+            pageVariables.put("status", " ");
+            resp.getWriter().print(PageGenerator.instance().getPage("index.html", pageVariables));
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
         else{
-            Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("name", userProfile.getName());
             resp.getWriter().print(PageGenerator.instance().getPage("chat.html", pageVariables));
         }

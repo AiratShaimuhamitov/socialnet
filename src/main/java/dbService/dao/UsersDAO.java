@@ -5,6 +5,8 @@ import dbService.dataSets.UsersDataSet;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
@@ -69,5 +71,18 @@ public class UsersDAO {
             }
         }
         return  friendsDataSets;
+    }
+
+    public List<UsersDataSet> getUsers(String name, String lastName) {
+        Criteria criteria = session.createCriteria(UsersDataSet.class);
+        Criterion nameCriteria = Restrictions.eq("name", name);
+        Criterion lastNameCriteria = Restrictions.eq("lastName", lastName);
+
+        LogicalExpression andExp = Restrictions.and(nameCriteria, lastNameCriteria);
+
+        criteria.add(andExp);
+
+        List<UsersDataSet> dataSets = criteria.list();
+        return dataSets;
     }
 }

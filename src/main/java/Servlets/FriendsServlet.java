@@ -26,8 +26,11 @@ public class FriendsServlet extends HttpServlet {
 
         UserProfile userProfile = userService.getUserBySessionId(req.getSession().getId());
 
+        HashMap<String, Object> pageVariables = new HashMap<>();
+
         if(userProfile == null){
-            resp.getWriter().print("Error: user was not founded!");
+            pageVariables.put("status", " ");
+            resp.getWriter().print(PageGenerator.instance().getPage("index.html", pageVariables));
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
         else {
@@ -36,10 +39,10 @@ public class FriendsServlet extends HttpServlet {
             int i = 1;
             for (Long friendsId: friends){
                 UserProfile friendProfile = userService.getUserById(friendsId);
-                stringBuilder.append("<a href=\"user?id="+ friendProfile.getId() +"\">" + i + ". " + friendProfile.getName() + " " + friendProfile.getLastName() + "</a> <br>");
+                stringBuilder.append("<a href=\"user?id="+ friendProfile.getId() +"\">" + i + ". "
+                        + friendProfile.getName() + " " + friendProfile.getLastName() + "</a> <br>");
                 i++;
             }
-            HashMap<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("friends", stringBuilder);
             resp.getWriter().print(PageGenerator.instance().getPage("friends.html", pageVariables));
             resp.setStatus(HttpServletResponse.SC_OK);

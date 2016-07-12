@@ -122,6 +122,24 @@ public class DBService {
         return friendsId;
     }
 
+    public List<UserProfile> getUsersByName(String name, String lastName) throws DBException{
+        Session session = sessionFactory.openSession();
+        UsersDAO dao = new UsersDAO(session);
+        List<UsersDataSet> usersDataSets = dao.getUsers(name, lastName);
+        session.close();
+        if(usersDataSets == null){
+            return null;
+        }
+        List<UserProfile> userProfiles = new ArrayList<>();
+        for(UsersDataSet dataSet: usersDataSets){
+            UserProfile userProfile = new UserProfile(
+                    dataSet.getId(), dataSet.getName(), dataSet.getLastName(),
+                    dataSet.getAge(), dataSet.getEmail(), dataSet.getPass());
+            userProfiles.add(userProfile);
+        }
+        return userProfiles;
+    }
+
     public Boolean containsUser(String email){
         try (Session session = sessionFactory.openSession()){
             if(new UsersDAO(session).get(email) != null){

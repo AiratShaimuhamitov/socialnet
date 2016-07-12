@@ -18,8 +18,10 @@ class Main{
         RegistrationServlet registrationServlet = new RegistrationServlet(userService);
         SessionDeleteServlet sessionDeleteServlet = new SessionDeleteServlet(userService);
         FriendsServlet friendsServlet = new FriendsServlet(userService);
+        UsersSearchServlet searchServlet = new UsersSearchServlet(userService);
         ChatServlet chatServlet = new ChatServlet(userService);
         UserServlet userServlet = new UserServlet(userService);
+        MessagesServlet messagesServlet = new MessagesServlet();
 
 
 
@@ -31,6 +33,8 @@ class Main{
         context.addServlet(new ServletHolder(friendsServlet), "/friends");
         context.addServlet(new ServletHolder(chatServlet), "/wschat");
         context.addServlet(new ServletHolder(userServlet), "/user");
+        context.addServlet(new ServletHolder(searchServlet), "/search");
+        context.addServlet(new ServletHolder(messagesServlet), "/messages");
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 
         Server server = new Server(8080);

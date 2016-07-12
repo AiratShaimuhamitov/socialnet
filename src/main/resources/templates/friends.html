@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Friends</title>
+	<style>
+		body {
+			background: #f8f8ff; /* Цвет фона */
+		}
+	</style>
 </head>
 <body>
 <span style="font-family: Arial,serif;">
@@ -12,13 +17,14 @@
 				<td width="50%" align="left">
 					<p><a href="/*">My page</a></p>
 					<p><a href="/friends">My friends(Beta)</a></p>
-					<p><a href="messages">My messages(Beta)</a></p>
+					<p><a href="/messages">My messages(Beta)</a></p>
+					<p><a href="/search">Search users(Beta)</a></p>
 					<p><a href="/wschat">General chat</a></p>
 					<p><a href="/exit">Exit</a></p>
 				</td>
 				<td width="50%" align="left" class="a">
 					<p><h2>My friends:</h2></p>
-						${friends}
+					${friends}
 				</td>
 			</tr>
 		</table>
