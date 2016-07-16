@@ -34,6 +34,7 @@ public class UsersSearchServlet extends HttpServlet {
             resp.getWriter().print(PageGenerator.instance().getPage("index.html", pageVariables));
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
+            pageVariables.put("status", " ");
             pageVariables.put("users", " ");
             resp.getWriter().print(PageGenerator.instance().getPage("search.html", pageVariables));
             resp.setStatus(HttpServletResponse.SC_OK);
@@ -43,9 +44,20 @@ public class UsersSearchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Map<String, Object> pageVariables = new HashMap<>();
+
         String []searchQuery = req.getParameter("search_query").split(" ");
-        String name = searchQuery[0];
-        String lastName = searchQuery[1];
+        String name;
+        String lastName;
+        try {
+            name = searchQuery[0];
+            lastName = searchQuery[1];
+        } catch (ArrayIndexOutOfBoundsException e){
+            pageVariables.put("status", "Enter correct name and last name!");
+            pageVariables.put("users", " ");
+            resp.getWriter().print(PageGenerator.instance().getPage("search.html", pageVariables));
+            return;
+        }
 
         List<UserProfile> userProfiles = userService.getUserProfilesByName(name, lastName);
 
@@ -57,8 +69,9 @@ public class UsersSearchServlet extends HttpServlet {
             i++;
         }
 
-        Map<String, Object> pageVariables = new HashMap<>();
+
         pageVariables.put("users", stringBuilder);
+        pageVariables.put("status", "Was found " + userProfiles.size() + " users:");
         resp.getWriter().print(PageGenerator.instance().getPage("search.html", pageVariables));
 
         resp.setStatus(HttpServletResponse.SC_OK);
